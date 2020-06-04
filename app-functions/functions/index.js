@@ -68,7 +68,7 @@ app.post('/post', (request, response) => {
     const newPost = {
         author: request.body.author,
         body: request.body.body,
-        date: admin.firestore.Timestamp.fromDate(new Date())
+        date: new Date().toISOString()
     };
 
     db.collection('posts').add(newPost).then((doc) => {
@@ -81,4 +81,4 @@ app.post('/post', (request, response) => {
 });
 
 // endpoint in Firebase Functions
-exports.api = functions.https.onRequest(app);
+exports.api = functions.region('europe-west1').https.onRequest(app);
