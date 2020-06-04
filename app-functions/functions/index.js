@@ -1,5 +1,6 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
+const express = require('express');
 
 const serviceAccount = require("../key/serviceAccount.json");
 
@@ -8,14 +9,45 @@ admin.initializeApp({
   databaseURL: "https://social-media-5cf15.firebaseio.com"
 });
 
+// admin.initializeApp();
+
+const app = express();
 let db = admin.firestore();
 
+// getPosts WITHOUT express
+// exports.getPosts = functions.https.onRequest((request, response) => {
+//     db.collection('posts').get().then((snapshot) => {
+//         let posts = [];
+//         snapshot.forEach((doc) => {
+//             posts.push(doc.data());
+//         });
+//         return response.json(posts)
+//     })
+//     .catch((err) => console.error(err));
+// });
 
-exports.helloWorld = functions.https.onRequest((request, response) => {
-    response.send("Hello from Firebase!");
-});
+// createPost WITHOUT express
+// exports.createPost = functions.https.onRequest((request, response) => {
+//     if(request.method !== 'POST'){
+//         return response.status(400).json({ error: 'Method not allowed' });
+//     }
+//     const newPost = {
+//         author: request.body.author,
+//         body: request.body.body,
+//         date: admin.firestore.Timestamp.fromDate(new Date())
+//     };
 
-exports.getPosts = functions.https.onRequest((request, response) => {
+//     db.collection('posts').add(newPost).then((doc) => {
+//         response.json({ message: `document ${doc.id} created successfully` });
+//     })
+//     .catch((err) => {
+//         response.status(500).json({ error: 'error when trying to create new post!' });
+//         console.error(err);
+//     });
+// });
+
+// getPosts WITH express
+app.get('/posts', (request, response) => {
     db.collection('posts').get().then((snapshot) => {
         let posts = [];
         snapshot.forEach((doc) => {
@@ -26,21 +58,4 @@ exports.getPosts = functions.https.onRequest((request, response) => {
     .catch((err) => console.error(err));
 });
 
-exports.createPost = functions.https.onRequest((request, response) => {
-    if(request.method !== 'POST'){
-        return response.status(400).json({ error: 'Method not allowed' });
-    }
-    const newPost = {
-        author: request.body.author,
-        body: request.body.body,
-        date: admin.firestore.Timestamp.fromDate(new Date())
-    };
-
-    db.collection('posts').add(newPost).then((doc) => {
-        response.json({ message: `document ${doc.id} created successfully` });
-    })
-    .catch((err) => {
-        response.status(500).json({ error: 'error when trying to create new post!' });
-        console.error(err);
-    });
-});
+exports.api = functions.https.onRequest(app);
