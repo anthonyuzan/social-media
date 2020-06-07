@@ -78,11 +78,11 @@ app.post('/signup', (request, response) => {
     };
 
     // TODO: validate data
-
+    let token, userId;
     db
         .doc(`/users/${newUser.username}`)
         .get()
-        .then(doc => {
+        .then((doc) => {
             if(doc.exists){
                 return response.status(400).json({ username: 'this username is already taken'});
             }
@@ -92,13 +92,26 @@ app.post('/signup', (request, response) => {
                     .createUserWithEmailAndPassword(newUser.email, newUser.password)
             }
         })
-        .then(data => {
+        .then((data) => {
+            userId = data.user.uid;
             return data.user.getIdToken();
         })
-        .then(token => {
+        .then((idToken) => {
+            token = idToken;
+            const userCredentials = {
+                username: newUser.username,
+                email: newUser.email,
+                createdAt: new Date().toISOString(),
+                userId: userId
+            };
+            return db
+                .doc(`/users/${newUser.username}`)
+                .set(userCredentials);
+        })
+        .then(() => {
             return response.status(201).json({ token });
         })
-        .catch(err => {
+        .catch((err) => {
             console.error(err);
             if(err.code === 'auth/email-already-in-use'){
                 return response.status(400).json({ email: 'Email is already in use'});
