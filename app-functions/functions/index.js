@@ -170,6 +170,7 @@ app.post('/login', (request, response) => {
 
     let errors = {};
 
+    // Email and password validation (no inputs)
     if (isEmpty(user.email)) errors.email = 'Must not be empty';
     if (isEmpty(user.password)) errors.password = 'Must not be empty';
 
@@ -186,7 +187,9 @@ app.post('/login', (request, response) => {
         })
         .catch((err) => {
             console.error(err);
-            return response.status(500).json({ error: err.code });
+            if (err.code === 'auth/wrong-password') {
+                return response.status(403).json({ general: 'Wrong credentials, please try again' });
+            } else return response.status(500).json({ error: err.code });
         });
 });
 
