@@ -4,10 +4,11 @@ const admin = require('firebase-admin');
 const express = require('express');
 
 const serviceAccount = require("../key/serviceAccount.json");
+const { request, response } = require('express');
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://social-media-5cf15.firebaseio.com"
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: "https://social-media-5cf15.firebaseio.com"
 });
 
 // admin.initializeApp();
@@ -67,14 +68,14 @@ app.post('/post', (request, response) => {
         });
 });
 
-const isEmail = (email) => { 
+const isEmail = (email) => {
     const emailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    if(email.match(emailRegEx)) return true;
+    if (email.match(emailRegEx)) return true;
     else return false;
 }
 
 const isEmpty = (string) => {
-    if(string.trim() === '') return true;
+    if (string.trim() === '') return true;
     else return false;
 }
 
@@ -87,32 +88,31 @@ app.post('/signup', (request, response) => {
         username: request.body.username
     };
 
-    
     // Validation security
     let errors = {};
 
     // Email validation
-    if(isEmpty(newUser.email)){
+    if (isEmpty(newUser.email)) {
         errors.email = 'Must not be empty';
-    } else if(!isEmail(newUser.email)){
+    } else if (!isEmail(newUser.email)) {
         errors.email = 'Must be a valid email address';
     }
 
     // Password validation
-    if(isEmpty(newUser.password)){
+    if (isEmpty(newUser.password)) {
         errors.password = 'Must not be empty';
     }
-    if(newUser.password !== newUser.confirmPassword){
+    if (newUser.password !== newUser.confirmPassword) {
         errors.confirmPassword = 'Passwords must match';
     }
 
     // Username validation
-    if(isEmpty(newUser.username)){
+    if (isEmpty(newUser.username)) {
         errors.username = 'Must note be empty';
     }
 
     // Check the Object "errors"
-    if(Object.keys(errors).length > 0){
+    if (Object.keys(errors).length > 0) {
         return response.status(400).json(errors);
     }
 
@@ -121,10 +121,10 @@ app.post('/signup', (request, response) => {
         .doc(`/users/${newUser.username}`)
         .get()
         .then((doc) => {
-            if(doc.exists){
-                return response.status(400).json({ username: 'this username is already taken'});
+            if (doc.exists) {
+                return response.status(400).json({ username: 'this username is already taken' });
             }
-            else{
+            else {
                 return firebase
                     .auth()
                     .createUserWithEmailAndPassword(newUser.email, newUser.password)
@@ -151,12 +151,42 @@ app.post('/signup', (request, response) => {
         })
         .catch((err) => {
             console.error(err);
-            if(err.code === 'auth/email-already-in-use'){
-                return response.status(400).json({ email: 'Email is already in use'});
+            if (err.code === 'auth/email-already-in-use') {
+                return response.status(400).json({ email: 'Email is already in use' });
             }
-            else{
+            else {
                 return response.status(500).json({ error: err.code });
             }
+        });
+});
+
+// Login route
+app.post('/login', (request, response) => {
+
+    const user = {
+        email: request.body.email,
+        password: request.body.password
+    };
+
+    let errors = {};
+
+    if (isEmpty(user.email)) errors.email = 'Must not be empty';
+    if (isEmpty(user.password)) errors.password = 'Must not be empty';
+
+    if (Object.keys(errors).length > 0) return response.status(400).json(errors);
+
+    firebase
+        .auth()
+        .signInWithEmailAndPassword(user.email, user.password)
+        .then((data) => {
+            return data.user.getIdToken();
+        })
+        .then((token) => {
+            return response.json({ token });
+        })
+        .catch((err) => {
+            console.error(err);
+            return response.status(500).json({ error: err.code });
         });
 });
 
