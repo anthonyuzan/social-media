@@ -27,7 +27,7 @@ let db = admin.firestore();
 
 firebase.initializeApp(firebaseConfig)
 
-// getPosts WITH express
+
 app.get('/posts', (request, response) => {
     db
         .collection('posts')
@@ -48,7 +48,6 @@ app.get('/posts', (request, response) => {
         .catch((err) => console.error(err));
 });
 
-// createPost WITH express
 app.post('/post', (request, response) => {
     const newPost = {
         author: request.body.author,
@@ -68,6 +67,17 @@ app.post('/post', (request, response) => {
         });
 });
 
+const isEmail = (email) => { 
+    const emailRegEx = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    if(email.match(emailRegEx)) return true;
+    else return false;
+}
+
+const isEmpty = (string) => {
+    if(string.trim() === '') return true;
+    else return false;
+}
+
 // Signup route
 app.post('/signup', (request, response) => {
     const newUser = {
@@ -77,7 +87,35 @@ app.post('/signup', (request, response) => {
         username: request.body.username
     };
 
-    // TODO: validate data
+    
+    // Validation security
+    let errors = {};
+
+    // Email validation
+    if(isEmpty(newUser.email)){
+        errors.email = 'Must not be empty';
+    } else if(!isEmail(newUser.email)){
+        errors.email = 'Must be a valid email address';
+    }
+
+    // Password validation
+    if(isEmpty(newUser.password)){
+        errors.password = 'Must not be empty';
+    }
+    if(newUser.password !== newUser.confirmPassword){
+        errors.confirmPassword = 'Passwords must match';
+    }
+
+    // Username validation
+    if(isEmpty(newUser.username)){
+        errors.username = 'Must note be empty';
+    }
+
+    // Check the Object "errors"
+    if(Object.keys(errors).length > 0){
+        return response.status(400).json(errors);
+    }
+
     let token, userId;
     db
         .doc(`/users/${newUser.username}`)
