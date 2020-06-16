@@ -1,4 +1,4 @@
-const { db } = require('../util/admin');
+const { admin, db } = require('../util/admin');
 
 const config = require('../util/config');
 
@@ -8,6 +8,7 @@ const firebase = require('firebase');
 firebase.initializeApp(firebaseConfig)
 
 const { validateSignupData, validateLoginData } = require('../util/validators');
+const { request, response } = require('express');
 
 exports.signup = (request, response) => {
     const newUser = {
@@ -20,6 +21,8 @@ exports.signup = (request, response) => {
     const { errors, valid } = validateSignupData(newUser);
 
     if (!valid) return response.status(400).json(errors);
+
+    const noImg = 'no-img.png';
 
     let token, userId;
 
@@ -46,6 +49,7 @@ exports.signup = (request, response) => {
                 username: newUser.username,
                 email: newUser.email,
                 createdAt: new Date().toISOString(),
+                imageUrl: `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${noImg}?alt=media`,
                 userId: userId
             };
             return db
@@ -93,4 +97,5 @@ exports.login = (request, response) => {
             } else return response.status(500).json({ error: err.code });
         });
 };
+
 
