@@ -6,3 +6,6 @@ Stack: React, Firebase, Redux, Express, and Material-UI.
 - GET posts endpoint
 - POST post endpoint
 - Authentification 
+- Signup 
+- Login
+- Change profile image
