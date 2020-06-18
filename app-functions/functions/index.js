@@ -5,7 +5,7 @@ const app = express();
 const FBAuth = require('./util/fbAuth');
 
 const { getAllPosts, postOnePost } = require('./users/posts');
-const { signup, login, uploadImage } = require('./users/users')
+const { signup, login, uploadImage, addUserDetails } = require('./users/users')
 
 // Posts routes
 app.get('/posts', getAllPosts);
@@ -15,6 +15,7 @@ app.post('/post', FBAuth, postOnePost);
 app.post('/signup', signup);
 app.post('/login', login);
 app.post('/user/image', FBAuth, uploadImage);
+app.post('/user', FBAuth, addUserDetails);
 
 // Function to deploy in Firebase Functions
 exports.api = functions.region('europe-west1').https.onRequest(app);
