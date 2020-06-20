@@ -10,6 +10,7 @@ firebase.initializeApp(firebaseConfig)
 const { validateSignupData, validateLoginData, reduceUserDetails } = require('../util/validators');
 const { request, response } = require('express');
 const { cpuUsage } = require('process');
+const { user } = require('firebase-functions/lib/providers/auth');
 
 // Sign user up
 exports.signup = (request, response) => {
@@ -113,6 +114,30 @@ exports.addUserDetails = (request, response) => {
             console.error(err);
             return response.status(500).json({ error: err.code })
         });
+};
+
+// Get own user details
+exports.getAuthenticatedUser = (request, response) => {
+    let userData = {};
+    db.doc(`/users/${request.user.username}`).get()
+        .then((doc) => {
+            if (doc.exists) {
+                userData.credentials = doc.data();
+                return db.collection('likes').where('username', '==', request.user.username).get();
+            }
+        })
+        .then((data) => {
+            userData.likes = [];
+            data.forEach((doc) => {
+                userData.likes.push(doc.data());
+
+            })
+            return response.json(userData);
+        })
+        .catch((err) => {
+            console.error(err);
+            return response.status(500).json({ error: err.code });
+        })
 };
 
 
