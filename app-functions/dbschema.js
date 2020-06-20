@@ -20,4 +20,29 @@ let db = {
             commentCount: 2
         }
     ]
-}
+};
+
+const userDetails = {
+    // Redux data
+    credentials : {
+        userId: 'QcszvIOidjabxiQERH3gzqieLiB2',
+            email: 'naruto@konoha.com',
+            username: 'naruto',
+            createdAt: '2020-06-07T14:02:48.776Z',
+            imageUrl: 'image/feferz/efruzief',
+            bio: 'Shinobi from Konoha.',
+            website: 'https://user.com',
+            location: 'Konoha, PdF'
+    },
+    likes : [
+        {
+            username: 'naruto',
+            screamId: 'jsmlqjIHUD86Z'
+        },
+        {
+            username: 'naruto',
+            screamId: 'oztj98798gUDU68'
+        }
+    ]
+};
+
