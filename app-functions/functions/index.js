@@ -10,6 +10,11 @@ const { signup, login, uploadImage, addUserDetails, getAuthenticatedUser } = req
 // Posts routes
 app.get('/posts', getAllPosts);
 app.post('/post', FBAuth, postOnePost);
+// TODO: get post info
+// TODO: delete post
+// TODO: like a post
+// TODO: unlike a post
+// TODO: comment a post
 
 // Users routes
 app.post('/signup', signup);
