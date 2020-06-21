@@ -19,6 +19,14 @@ let db = {
             likeCount: 5,
             commentCount: 2
         }
+    ],
+    comments: [
+        {
+            username: 'naruto',
+            postId: '879Hhjklgy7',
+            body: 'Go to Ramen tonight ?',
+            createdAt: '2020-06-04T19:17:14.681Z'
+        }
     ]
 };
 
