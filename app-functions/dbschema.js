@@ -24,7 +24,7 @@ let db = {
         {
             username: 'naruto',
             postId: '879Hhjklgy7',
-            body: 'Go to Ramen tonight ?',
+            body: 'Go to Ramen tonight?',
             createdAt: '2020-06-04T19:17:14.681Z'
         }
     ]

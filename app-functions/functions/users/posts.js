@@ -1,4 +1,5 @@
 const { db } = require('../util/admin');
+const { request, response } = require('express');
 
 exports.getAllPosts = (request, response) => {
     db
@@ -42,3 +43,27 @@ exports.postOnePost = (request, response) => {
             console.error(err);
         });
 };
+
+exports.getPost = (request, response) => {
+    let postData = {};
+    db.doc(`/posts/${request.params.postId}`).get()
+        .then((doc) => {
+            if (!doc.exists) {
+                return response.status(404).json({ error: 'Post not found' });
+            }
+            postData = doc.data();
+            postData.postId = doc.id;
+            return db.collection('comments').where('postId', '==', request.params.postId).get();
+        })
+        .then((data) => {
+            postData.comments = [];
+            data.forEach((doc) => {
+                postData.comments.push(doc.data());
+            });
+            return response.json(postData);
+        })
+        .catch((err) => {
+            console.error(err);
+            response.status(500).json({ error: err.code });
+        })
+}

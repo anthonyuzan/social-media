@@ -4,13 +4,13 @@ const app = express();
 
 const FBAuth = require('./util/fbAuth');
 
-const { getAllPosts, postOnePost } = require('./users/posts');
+const { getAllPosts, postOnePost, getPost } = require('./users/posts');
 const { signup, login, uploadImage, addUserDetails, getAuthenticatedUser } = require('./users/users')
 
 // Posts routes
 app.get('/posts', getAllPosts);
 app.post('/post', FBAuth, postOnePost);
-// TODO: get post info
+app.get('/post/:postId', getPost);
 // TODO: delete post
 // TODO: like a post
 // TODO: unlike a post
