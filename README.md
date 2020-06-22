@@ -5,6 +5,7 @@ Stack: React, Firebase, Redux, Express, and Material-UI.
 ## What's done?:
 - Read posts
 - Create new posts
+- Add comments to a post
 - Authentification security
 - Signup 
 - Login
