@@ -70,3 +70,30 @@ exports.getPost = (request, response) => {
             response.status(500).json({ error: err.code });
         })
 }
+
+exports.commentOnPost = (request, response) => {
+    if (request.body.body.trim() === '') return response.status(400).json({ error: 'Must not be empty' });
+
+    const newComment = {
+        body: request.body.body,
+        createdAt: new Date().toISOString(),
+        postId: request.params.postId,
+        username: request.user.username,
+        userImage: request.user.imageUrl
+    };
+
+    db.doc(`/posts/${request.params.postId}`).get()
+        .then((doc) => {
+            if (!doc.exists) {
+                return response.status(404).json({ error: 'Post not found' });
+            }
+            return db.collection('comments').add(newComment);
+        })
+        .then(() => {
+            response.json(newComment);
+        })
+        .catch((err) => {
+            console.error(err);
+            response.status(500).json({ error: 'Something went wrong' });
+        })
+}
