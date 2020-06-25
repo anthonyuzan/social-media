@@ -29,14 +29,19 @@ exports.postOnePost = (request, response) => {
     const newPost = {
         author: request.user.username,
         body: request.body.body,
-        date: new Date().toISOString()
+        userImage: request.user.imageUrl,
+        date: new Date().toISOString(),
+        likeCount: 0,
+        commentCount: 0
     };
 
     db
         .collection('posts')
         .add(newPost)
         .then((doc) => {
-            response.json({ message: `document ${doc.id} created successfully` });
+            const resPost = newPost;
+            resPost.postId = doc.id;
+            response.json(resPost);
         })
         .catch((err) => {
             response.status(500).json({ error: 'error when trying to create new post!' });
