@@ -6,6 +6,7 @@ Stack: React, Firebase, Redux, Express, and Material-UI.
 - Read posts
 - Create new posts
 - Add comments to a post
+- Like and unlike posts
 - Authentification security
 - Signup 
 - Login
