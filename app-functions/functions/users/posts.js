@@ -184,3 +184,27 @@ exports.unlikePost = (request, response) => {
             response.status(500).json({ error: err.code });
         })
 }
+
+exports.deletePost = (request, response) => {
+    const document = db.doc(`/posts/${request.params.postId}`);
+    document.get()
+        .then((doc) => {
+            if (!doc.exists) {
+                return response.status(404).json({ error: 'Post not found' })
+            }
+            if (doc.data().author !== request.user.username) {
+                return response.status(403).json({ error: 'Unauthorized' })
+            }
+            else {
+                return document.delete();
+            }
+        })
+        .then(() => {
+            response.json({ message: 'Post deleted successfully' })
+        })
+        .catch((err) => {
+            console.error(err);
+            return response.status(500).json({ error: err.code })
+        })
+
+}
