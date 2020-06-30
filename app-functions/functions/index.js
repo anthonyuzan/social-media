@@ -54,3 +54,26 @@ exports.createNotificationOnLike = functions.region('europe-west1').firestore.do
             });
     });
 
+exports.createNotificationOnComment = functions..region('europe-west1').firestore.document('comments/{id}')
+    .onCreate((snapshot) => {
+        db.doc(`/posts/${snapshot.data().postId}`).get()
+            .then((doc) => {
+                if (doc.exists) {
+                    return db.doc(`/notifications/${snapshot.id}`).set({
+                        createdAt: new Date().toISOString(),
+                        recipient: doc.data().username,
+                        sender: snapshot.data().username,
+                        type: 'comment',
+                        read: false,
+                        postId: doc.id
+                    });
+                }
+            })
+            .then(() => {
+                return;
+            })
+            .catch((err) => {
+                console.error(err);
+                return;
+            });
+    });
