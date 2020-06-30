@@ -27,6 +27,16 @@ let db = {
             body: 'Go to Ramen tonight?',
             createdAt: '2020-06-04T19:17:14.681Z'
         }
+    ],
+    notifications: [
+        {
+            recipient: 'naruto',
+            sender: 'sasuke',
+            read: 'true | false',
+            postId: '879Hhjklgy7',
+            type: 'like | comment',
+            createdAt: '2020-06-04T19:17:14.681Z'
+        }
     ]
 };
 
