@@ -4,6 +4,8 @@ const app = express();
 
 const FBAuth = require('./util/fbAuth');
 
+const { db } = require('./util/admin');
+
 const { getAllPosts, postOnePost, getPost, commentOnPost, likePost, unlikePost, deletePost } = require('./users/posts');
 const { signup, login, uploadImage, addUserDetails, getAuthenticatedUser } = require('./users/users')
 
@@ -27,3 +29,28 @@ app.get('/user', FBAuth, getAuthenticatedUser);
 
 // Function to deploy in Firebase Functions
 exports.api = functions.region('europe-west1').https.onRequest(app);
+
+exports.createNotificationOnLike = functions.region('europe-west1').firestore.document('likes/{id}')
+    .onCreate((snapshot) => {
+        db.doc(`/posts/${snapshot.data().postId}`).get()
+            .then((doc) => {
+                if (doc.exists) {
+                    return db.doc(`/notifications/${snapshot.id}`).set({
+                        createdAt: new Date().toISOString(),
+                        recipient: doc.data().username,
+                        sender: snapshot.data().username,
+                        type: 'like',
+                        read: false,
+                        postId: doc.id
+                    });
+                }
+            })
+            .then(() => {
+                return;
+            })
+            .catch((err) => {
+                console.error(err);
+                return;
+            });
+    });
+
