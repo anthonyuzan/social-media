@@ -30,14 +30,18 @@ app.get('/user', FBAuth, getAuthenticatedUser);
 // Function to deploy in Firebase Functions
 exports.api = functions.region('europe-west1').https.onRequest(app);
 
-exports.createNotificationOnLike = functions.region('europe-west1').firestore.document('likes/{id}')
+exports.createNotificationOnLike = functions
+    .region('europe-west1')
+    .firestore.document('likes/{id}')
     .onCreate((snapshot) => {
-        db.doc(`/posts/${snapshot.data().postId}`).get()
+        return db
+            .doc(`/posts/${snapshot.data().postId}`)
+            .get()
             .then((doc) => {
                 if (doc.exists) {
                     return db.doc(`/notifications/${snapshot.id}`).set({
                         createdAt: new Date().toISOString(),
-                        recipient: doc.data().username,
+                        recipient: doc.data().author,
                         sender: snapshot.data().username,
                         type: 'like',
                         read: false,
@@ -54,9 +58,12 @@ exports.createNotificationOnLike = functions.region('europe-west1').firestore.do
             });
     });
 
-exports.deleteNotificationOnUnlike = functions.region('europe-west1').firestore.document('likes/{id}')
+exports.deleteNotificationOnUnlike = functions
+    .region('europe-west1')
+    .firestore.document('likes/{id}')
     .onDelete((snapshot) => {
-        db.doc(`/notifications/${snapshot.id}`)
+        return db
+            .doc(`/notifications/${snapshot.id}`)
             .delete()
             .then(() => {
                 return;
@@ -67,14 +74,17 @@ exports.deleteNotificationOnUnlike = functions.region('europe-west1').firestore.
             })
     });
 
-exports.createNotificationOnComment = functions.region('europe-west1').firestore.document('comments/{id}')
+exports.createNotificationOnComment = functions
+    .region('europe-west1')
+    .firestore.document('comments/{id}')
     .onCreate((snapshot) => {
-        db.doc(`/posts/${snapshot.data().postId}`).get()
+        return db
+            .doc(`/posts/${snapshot.data().postId}`).get()
             .then((doc) => {
                 if (doc.exists) {
                     return db.doc(`/notifications/${snapshot.id}`).set({
                         createdAt: new Date().toISOString(),
-                        recipient: doc.data().username,
+                        recipient: doc.data().author,
                         sender: snapshot.data().username,
                         type: 'comment',
                         read: false,
