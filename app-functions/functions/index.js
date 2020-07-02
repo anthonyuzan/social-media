@@ -7,7 +7,7 @@ const FBAuth = require('./util/fbAuth');
 const { db } = require('./util/admin');
 
 const { getAllPosts, postOnePost, getPost, commentOnPost, likePost, unlikePost, deletePost } = require('./users/posts');
-const { signup, login, uploadImage, addUserDetails, getAuthenticatedUser, getUserDetails } = require('./users/users')
+const { signup, login, uploadImage, addUserDetails, getAuthenticatedUser, getUserDetails, markNotificationsRead } = require('./users/users')
 
 // Posts routes
 app.get('/posts', getAllPosts);
@@ -25,6 +25,7 @@ app.post('/user/image', FBAuth, uploadImage);
 app.post('/user', FBAuth, addUserDetails);
 app.get('/user', FBAuth, getAuthenticatedUser);
 app.get('/user/:username', getUserDetails);
+app.post('/notifications', FBAuth, markNotificationsRead);
 
 // Function to deploy in Firebase Functions
 exports.api = functions.region('europe-west1').https.onRequest(app);

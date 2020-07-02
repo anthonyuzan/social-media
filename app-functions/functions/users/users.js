@@ -245,5 +245,21 @@ exports.uploadImage = (request, response) => {
     busboy.end(request.rawBody);
 };
 
+exports.markNotificationsRead = (request, response) => {
+    let batch = db.batch();
+    request.body.forEach((notificationId) => {
+        const notification = db.doc(`/notifications/${notificationId}`);
+        batch.update(notification, { read: true });
+    });
+    batch.commit()
+        .then(() => {
+            return response.json({ message: 'Notifications marked read' })
+        })
+        .catch((err) => {
+            console.error(err);
+            return response.status(500).json({ error: err.code })
+        })
+}
+
 
 
