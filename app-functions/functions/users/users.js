@@ -160,6 +160,42 @@ exports.getAuthenticatedUser = (request, response) => {
         })
 };
 
+// Get any user's details
+exports.getUserDetails = (request, response) => {
+    let userData = {};
+    db.doc(`/users/${request.params.username}`).get()
+        .then((doc) => {
+            if (doc.exists) {
+                userData.user = doc.data();
+                return db.collection('posts').where('author', '==', request.params.username)
+                    .orderBy('date', 'desc')
+                    .get();
+            } else {
+                return response.status(404).json({ error: 'User not found' })
+            }
+        })
+        .then((data) => {
+            userData.posts = [];
+            data.forEach((doc) => {
+                userData.posts.push({
+                    body: doc.data().body,
+                    date: doc.data().date,
+                    author: doc.data().author,
+                    userImage: doc.data().userImage,
+                    commentCount: doc.data().commentCount,
+                    likeCount: doc.data().likeCount,
+                    postId: doc.id
+                })
+            });
+            return response.json(userData);
+        })
+        .catch((err) => {
+            console.error(err);
+            return response.status(500).json({ error: err.code });
+        })
+
+}
+
 
 // Upload a profil image for user
 exports.uploadImage = (request, response) => {
@@ -208,5 +244,6 @@ exports.uploadImage = (request, response) => {
     });
     busboy.end(request.rawBody);
 };
+
 
 
