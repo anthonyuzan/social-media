@@ -7,6 +7,7 @@ Stack: React, Firebase, Redux, Express, and Material-UI.
 - Create new posts
 - Add comments to a post
 - Like and unlike posts
+- Notifications system 
 - Delete posts
 - Authentification security
 - Signup 
