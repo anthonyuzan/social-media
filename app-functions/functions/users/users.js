@@ -106,7 +106,9 @@ exports.login = (request, response) => {
 exports.addUserDetails = (request, response) => {
     let userDetails = reduceUserDetails(request.body);
 
-    db.doc(`/users/${request.user.username}`).update(userDetails)
+    db
+        .doc(`/users/${request.user.username}`)
+        .update(userDetails)
         .then(() => {
             return response.json({ message: 'Details added successfully' });
         })
@@ -119,11 +121,16 @@ exports.addUserDetails = (request, response) => {
 // Get own user details
 exports.getAuthenticatedUser = (request, response) => {
     let userData = {};
-    db.doc(`/users/${request.user.username}`).get()
+    db
+        .doc(`/users/${request.user.username}`)
+        .get()
         .then((doc) => {
             if (doc.exists) {
                 userData.credentials = doc.data();
-                return db.collection('likes').where('username', '==', request.user.username).get();
+                return db
+                    .collection('likes')
+                    .where('username', '==', request.user.username)
+                    .get();
             }
         })
         .then((data) => {
@@ -163,11 +170,15 @@ exports.getAuthenticatedUser = (request, response) => {
 // Get any user's details
 exports.getUserDetails = (request, response) => {
     let userData = {};
-    db.doc(`/users/${request.params.username}`).get()
+    db
+        .doc(`/users/${request.params.username}`)
+        .get()
         .then((doc) => {
             if (doc.exists) {
                 userData.user = doc.data();
-                return db.collection('posts').where('author', '==', request.params.username)
+                return db
+                    .collection('posts')
+                    .where('author', '==', request.params.username)
                     .orderBy('date', 'desc')
                     .get();
             } else {
@@ -222,17 +233,22 @@ exports.uploadImage = (request, response) => {
         file.pipe(fs.createWriteStream(filepath));
     });
     busboy.on('finish', () => {
-        admin.storage().bucket(config.storageBucket).upload(imageToBeUploaded.filepath, {
-            resumable: false,
-            metadata: {
+        admin
+            .storage()
+            .bucket(config.storageBucket)
+            .upload(imageToBeUploaded.filepath, {
+                resumable: false,
                 metadata: {
-                    contentType: imageToBeUploaded.mimetype
+                    metadata: {
+                        contentType: imageToBeUploaded.mimetype
+                    }
                 }
-            }
-        })
+            })
             .then(() => {
                 const imageUrl = `https://firebasestorage.googleapis.com/v0/b/${config.storageBucket}/o/${imageFileName}?alt=media`;
-                return db.doc(`/users/${request.user.username}`).update({ imageUrl });
+                return db
+                    .doc(`/users/${request.user.username}`)
+                    .update({ imageUrl });
             })
             .then(() => {
                 return response.json({ message: 'Image uploaded successfully' });

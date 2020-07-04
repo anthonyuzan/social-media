@@ -51,14 +51,17 @@ exports.postOnePost = (request, response) => {
 
 exports.getPost = (request, response) => {
     let postData = {};
-    db.doc(`/posts/${request.params.postId}`).get()
+    db
+        .doc(`/posts/${request.params.postId}`)
+        .get()
         .then((doc) => {
             if (!doc.exists) {
                 return response.status(404).json({ error: 'Post not found' });
             }
             postData = doc.data();
             postData.postId = doc.id;
-            return db.collection('comments')
+            return db
+                .collection('comments')
                 .orderBy('createdAt', 'desc')
                 .where('postId', '==', request.params.postId)
                 .get();
@@ -95,7 +98,9 @@ exports.commentOnPost = (request, response) => {
             return doc.ref.update({ commentCount: doc.data().commentCount + 1 });
         })
         .then(() => {
-            return db.collection('comments').add(newComment);
+            return db
+                .collection('comments')
+                .add(newComment);
         })
         .then(() => {
             response.json(newComment);
@@ -148,8 +153,11 @@ exports.likePost = (request, response) => {
 }
 
 exports.unlikePost = (request, response) => {
-    const likeDocument = db.collection('likes').where('username', '==', request.user.username)
-        .where('postId', '==', request.params.postId).limit(1);
+    const likeDocument = db
+        .collection('likes')
+        .where('username', '==', request.user.username)
+        .where('postId', '==', request.params.postId)
+        .limit(1);
 
     const postDocument = db.doc(`/posts/${request.params.postId}`);
 

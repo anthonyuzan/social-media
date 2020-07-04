@@ -6,8 +6,25 @@ const FBAuth = require('./util/fbAuth');
 
 const { db } = require('./util/admin');
 
-const { getAllPosts, postOnePost, getPost, commentOnPost, likePost, unlikePost, deletePost } = require('./users/posts');
-const { signup, login, uploadImage, addUserDetails, getAuthenticatedUser, getUserDetails, markNotificationsRead } = require('./users/users')
+const { 
+    getAllPosts, 
+    postOnePost, 
+    getPost, 
+    commentOnPost, 
+    likePost, 
+    unlikePost, 
+    deletePost 
+} = require('./users/posts');
+
+const { 
+    signup, 
+    login, 
+    uploadImage, 
+    addUserDetails, 
+    getAuthenticatedUser, 
+    getUserDetails, 
+    markNotificationsRead 
+} = require('./users/users')
 
 // Posts routes
 app.get('/posts', getAllPosts);
