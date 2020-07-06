@@ -55,7 +55,7 @@ exports.createNotificationOnLike = functions
             .doc(`/posts/${snapshot.data().postId}`)
             .get()
             .then((doc) => {
-                if (doc.exists) {
+                if (doc.exists && doc.data().author !== snapshot.data().username) {
                     return db.doc(`/notifications/${snapshot.id}`).set({
                         createdAt: new Date().toISOString(),
                         recipient: doc.data().author,
@@ -92,7 +92,7 @@ exports.createNotificationOnComment = functions
         return db
             .doc(`/posts/${snapshot.data().postId}`).get()
             .then((doc) => {
-                if (doc.exists) {
+                if (doc.exists && doc.data().author !== snapshot.data().username) {
                     return db.doc(`/notifications/${snapshot.id}`).set({
                         createdAt: new Date().toISOString(),
                         recipient: doc.data().author,
