@@ -6,25 +6,26 @@ const FBAuth = require('./util/fbAuth');
 
 const { db } = require('./util/admin');
 
-const { 
-    getAllPosts, 
-    postOnePost, 
-    getPost, 
-    commentOnPost, 
-    likePost, 
-    unlikePost, 
-    deletePost 
+const {
+    getAllPosts,
+    postOnePost,
+    getPost,
+    commentOnPost,
+    likePost,
+    unlikePost,
+    deletePost
 } = require('./users/posts');
 
-const { 
-    signup, 
-    login, 
-    uploadImage, 
-    addUserDetails, 
-    getAuthenticatedUser, 
-    getUserDetails, 
-    markNotificationsRead 
-} = require('./users/users')
+const {
+    signup,
+    login,
+    uploadImage,
+    addUserDetails,
+    getAuthenticatedUser,
+    getUserDetails,
+    markNotificationsRead
+} = require('./users/users');
+const { onUpdate } = require('firebase-functions/lib/providers/remoteConfig');
 
 // Posts routes
 app.get('/posts', getAllPosts);
@@ -108,3 +109,28 @@ exports.createNotificationOnComment = functions
                 return;
             });
     });
+
+exports.onUserImageChange = functions
+    .region('europe-west1')
+    .firestore
+    .document('/users/{userId}')
+    .onUpdate((change) => {
+        console.log(change.before.data());
+        console.log(change.after.data());
+        if (change.before.data().imageUrl !== change.after.data().imageUrl) {
+            console.log('image has changed');
+            const batch = db.batch();
+            return db
+                .collection('posts')
+                .where('author', '==', change.before.data().username)
+                .get()
+                .then((data) => {
+                    data.forEach((doc) => {
+                        const post = db.doc(`/posts/${doc.id}`);
+                        batch.update(post, { userImage: change.after.data().imageUrl })
+                    })
+                    return batch.commit();
+                })
+        } else return true;
+    })
+
