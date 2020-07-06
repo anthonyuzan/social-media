@@ -66,9 +66,6 @@ exports.createNotificationOnLike = functions
                     });
                 }
             })
-            .then(() => {
-                return;
-            })
             .catch((err) => {
                 console.error(err);
                 return;
@@ -82,9 +79,6 @@ exports.deleteNotificationOnUnlike = functions
         return db
             .doc(`/notifications/${snapshot.id}`)
             .delete()
-            .then(() => {
-                return;
-            })
             .catch((err) => {
                 console.error(err);
                 return;
@@ -108,9 +102,6 @@ exports.createNotificationOnComment = functions
                         postId: doc.id
                     });
                 }
-            })
-            .then(() => {
-                return;
             })
             .catch((err) => {
                 console.error(err);

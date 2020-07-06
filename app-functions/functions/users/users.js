@@ -97,7 +97,7 @@ exports.login = (request, response) => {
         .catch((err) => {
             console.error(err);
             // auth/wrong-password
-            // auth/user-not-user
+            // auth/user-not-found
             return response.status(403).json({ general: 'Wrong credentials, please try again' });
         });
 };
