@@ -1,6 +1,6 @@
 # social-media
 
-Stack: React, Firebase, Redux, Express, and Material-UI.
+Stack: React, Firebase, Redux, Express and Material-UI.
 
 ## What's done?:
 
@@ -20,3 +20,4 @@ Front:
 - Main pages
 - Routes
 - Form to login
+- Form to sign up
