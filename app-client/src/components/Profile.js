@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
+import EditDetails from './EditDetails';
 
 // MUI Stuff
 import Button from '@material-ui/core/Button';
@@ -154,6 +155,8 @@ export class Profile extends Component {
               <KeyboardReturn color="primary"/>
             </IconButton>
           </Tooltip>
+
+          <EditDetails/>
 
         </div>
       </Paper>
