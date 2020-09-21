@@ -20,7 +20,10 @@ import { editUserDetails } from '../redux/actions/userActions';
 import EditIcon from '@material-ui/icons/Edit';
 
 const styles = (theme) => ({
-  ...theme.spreadThis
+  ...theme.spreadThis,
+  button: {
+    float: 'right'
+  }
 });
 
 export class EditDetails extends Component {
