@@ -21,3 +21,4 @@ Front:
 - Routes
 - Form to login
 - Form to sign up
+- Profile section
