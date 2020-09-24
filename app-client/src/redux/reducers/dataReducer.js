@@ -6,8 +6,8 @@ const initialState = {
   loading: false
 }
 
-export default function(state = initialState, actions){
-  switch(actions.type){
+export default function(state = initialState, action){
+  switch(action.type){
     case LOADING_DATA:
       return{
         ...state,
@@ -26,5 +26,7 @@ export default function(state = initialState, actions){
       return{
         ...state
       }
+    default:
+      return state;
   }
 }
