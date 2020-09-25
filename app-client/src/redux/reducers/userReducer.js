@@ -50,7 +50,7 @@ export default function (state = initialState, action) {
       return{
         ...state,
         likes: state.likes.filter(
-          (like) => like.postId === action.payload.postId
+          (like) => like.postId !== action.payload.postId
         )
       }
     default:
