@@ -90,3 +90,8 @@ export const postPost = (newPost) => (dispatch) => {
       })
     })
 }
+
+// Clear errors
+export const clearErrors = () => dispatch => {
+  dispatch({ type: CLEAR_ERRORS })
+}

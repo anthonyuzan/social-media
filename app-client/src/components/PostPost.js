@@ -13,7 +13,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 // Redux stuff
 import { connect } from 'react-redux';
-import { postPost } from '../redux/actions/dataActions';
+import { postPost, clearErrors } from '../redux/actions/dataActions';
 
 // Icons
 import AddIcon from '@material-ui/icons/Add';
@@ -22,7 +22,9 @@ import CloseIcon from '@material-ui/icons/Close';
 const styles = (theme) => ({
   ...theme.spreadThis,
   submitButton: {
-    position: 'relative'
+    position: 'relative',
+    float: 'right',
+    marginTop: 10
   },
   progressSpinner: {
     position: 'absolute'
@@ -30,7 +32,7 @@ const styles = (theme) => ({
   closeButton: {
     position: 'absolute',
     left: '90%',
-    top: '10%'
+    top: '2%'
   }
 })
 
@@ -45,14 +47,14 @@ class PostPost extends Component {
       this.setState({ errors: nextProps.UI.errors });
     }
     if(!nextProps.UI.errors && !nextProps.UI.loading){
-      this.setState({ body: ''});
-      this.userClose()
+      this.setState({ body: '', open: false, errors: {} });
     }
   }
   userOpen = () => {
     this.setState({ open: true })
   }
   userClose = () => {
+    this.props.clearErrors()
     this.setState({ open: false, errors: {} })
   }
   userChange = (event) => {
@@ -114,6 +116,7 @@ class PostPost extends Component {
 
 PostPost.propTypes = {
   postPost: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired,
   UI: PropTypes.object.isRequired
 };
 
@@ -121,4 +124,4 @@ const mapStateToProps = (state) => ({
   UI: state.UI
 });
 
-export default connect(mapStateToProps, { postPost })(withStyles(styles)(PostPost))
+export default connect(mapStateToProps, { postPost, clearErrors })(withStyles(styles)(PostPost))
