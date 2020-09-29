@@ -1,12 +1,13 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import withStyles from '@material-ui/core/styles/withStyles';
 import MyButton from '../../util/MyButton';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 import LikeButton from './LikeButton';
+import Comments from './Comments';
 
 // MUI Stuff
+import withStyles from '@material-ui/core/styles/withStyles';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -25,10 +26,6 @@ import ChatIcon from '@material-ui/icons/Chat';
 
 const styles = theme => ({
   ...theme.spreadThis,
-  invisibleSeparator: {
-    border: 'none',
-    margin: 4
-  },
   profileImage: {
     maxWidth: 200,
     height: 200,
@@ -76,11 +73,10 @@ class PostDialog extends Component {
         likeCount,
         commentCount,
         userImage,
-        author
+        author,
+        comments
       },
-      UI: {
-        loading
-      }
+      UI: { loading }
     } = this.props
 
     const dialogMarkup = loading ? (
@@ -111,6 +107,8 @@ class PostDialog extends Component {
             </MyButton>
             <span>{commentCount} Comments</span>
           </Grid>
+          <hr className={classes.visibleSeparator}/>
+          <Comments comments={comments}/>
         </Grid>
       )
 
