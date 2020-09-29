@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 import LikeButton from './LikeButton';
 import Comments from './Comments';
+import CommentForm from './CommentForm';
 
 // MUI Stuff
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -16,7 +17,7 @@ import Typography from '@material-ui/core/Typography';
 
 // Redux stuff
 import { connect } from 'react-redux';
-import { getPost } from '../../redux/actions/dataActions';
+import { getPost, clearErrors } from '../../redux/actions/dataActions';
 
 // Icons 
 import CloseIcon from '@material-ui/icons/Close';
@@ -61,6 +62,7 @@ class PostDialog extends Component {
   }
   userClose = () => {
     this.setState({ open: false })
+    this.props.clearErrors()
   }
 
   render() {
@@ -108,6 +110,7 @@ class PostDialog extends Component {
             <span>{commentCount} Comments</span>
           </Grid>
           <hr className={classes.visibleSeparator}/>
+          <CommentForm postId={postId} />
           <Comments comments={comments}/>
         </Grid>
       )
@@ -132,6 +135,7 @@ class PostDialog extends Component {
 
 PostDialog.propTypes = {
   getPost: PropTypes.func.isRequired,
+  clearErrors: PropTypes.func.isRequired,
   postId: PropTypes.string.isRequired,
   author: PropTypes.string.isRequired,
   post: PropTypes.object.isRequired,
@@ -144,7 +148,8 @@ const mapStateToProps = state => ({
 })
 
 const mapActionsToProps = {
-  getPost
+  getPost,
+  clearErrors
 }
 
 export default connect(mapStateToProps, mapActionsToProps)(withStyles(styles)(PostDialog))
