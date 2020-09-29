@@ -1,8 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import { Link }  from 'react-router-dom';
 import PropTypes from 'prop-types';
-import MyButton from '../util/MyButton';
-import PostPost from './PostPost';
+import MyButton from '../../util/MyButton';
+import PostPost from '../post/PostPost';
 
 // MUI stuff
 import AppBar from '@material-ui/core/AppBar';

@@ -7,8 +7,7 @@ import {
   SET_ERRORS,
   CLEAR_ERRORS,
   POST_POST,
-  LOADING_UI, 
-  LOADING_USER, 
+  LOADING_UI,
   SET_POST,
   STOP_LOADING_UI
 } from '../types';

@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import withStyles from '@material-ui/core/styles/withStyles';
-import MyButton from '../util/MyButton';
+import MyButton from '../../util/MyButton';
 import dayjs from 'dayjs';
 import { Link } from 'react-router-dom';
 import LikeButton from './LikeButton';
@@ -15,7 +15,7 @@ import Typography from '@material-ui/core/Typography';
 
 // Redux stuff
 import { connect } from 'react-redux';
-import { getPost } from '../redux/actions/dataActions';
+import { getPost } from '../../redux/actions/dataActions';
 
 // Icons 
 import CloseIcon from '@material-ui/icons/Close';
