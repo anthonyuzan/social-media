@@ -107,7 +107,7 @@ export class Profile extends Component {
             <img src={imageUrl} alt="profile" className="profile-image" />
             <input type="file" id="imageInput" hidden="hidden" onChange={this.userImageChange} />
             <MyButton tip="Edit profile picture" onClick={this.userEditPicture} btnClassName="button">
-              <EditIcon color="primary"/>
+              <EditIcon color="primary" />
             </MyButton>
           </div>
 
@@ -148,10 +148,10 @@ export class Profile extends Component {
           </div>
 
           <MyButton tip="Logout" onClick={this.userLogout}>
-            <KeyboardReturn color="primary"/>
+            <KeyboardReturn color="primary" />
           </MyButton>
 
-          <EditDetails/>
+          <EditDetails />
 
         </div>
       </Paper>

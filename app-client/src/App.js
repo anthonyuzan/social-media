@@ -5,6 +5,7 @@ import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import themeObject from './util/theme';
 import jwtDecode from 'jwt-decode';
+import axios from 'axios';
 
 // Redux
 import { Provider } from 'react-redux';
@@ -20,7 +21,8 @@ import AuthRoute from './util/AuthRoute';
 import home from './pages/home';
 import login from './pages/login';
 import signup from './pages/signup';
-import axios from 'axios';
+import user from './pages/user';
+
 
 const theme = createMuiTheme(themeObject);
 
@@ -31,7 +33,7 @@ if (token) {
     store.dispatch(logoutUser())
     window.location.href = '/login';
   } else {
-    store.dispatch({ type: SET_AUTHENTICATED})
+    store.dispatch({ type: SET_AUTHENTICATED })
     axios.defaults.headers.common['Authorization'] = token;
     store.dispatch(getUserData());
   }
@@ -47,14 +49,9 @@ export class App extends Component {
             <div className="container">
               <Switch>
                 <Route exact path="/" component={home} />
-                <AuthRoute
-                  exact path="/login"
-                  component={login}
-                />
-                <AuthRoute
-                  exact path="/signup"
-                  component={signup}
-                />
+                <AuthRoute exact path="/login" component={login} />
+                <AuthRoute exact path="/signup" component={signup} />
+                <Route exact path="/users/:username" component={user} />
               </Switch>
             </div>
           </Router>

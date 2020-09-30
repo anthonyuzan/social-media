@@ -130,3 +130,22 @@ export const submitComment = (postId, commentData) => (dispatch) => {
       })
     })
 }
+
+// Get user data
+export const getUserData = (username) => (dispatch) => {
+  dispatch({ type: LOADING_DATA })
+  axios
+    .get(`/user/${username}`)
+    .then((res) => {
+      dispatch({
+        type: SET_POSTS,
+        payload: res.data.posts
+      })
+    })
+    .catch(() => {
+      dispatch({
+        type: SET_POSTS,
+        payload: null
+      })
+    })
+}
