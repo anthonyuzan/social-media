@@ -22,3 +22,10 @@ Front:
 - Form to login
 - Form to sign up
 - Profile section
+- Profile page
+- Posting system
+- Like / Unlike
+- Comments
+
+TO DO:
+- Notifications system
