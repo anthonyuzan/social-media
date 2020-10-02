@@ -84,7 +84,7 @@ export class Post extends Component {
             <ChatIcon color="primary" />
           </MyButton>
           <span>{commentCount} Comments</span>
-          <PostDialog postId={postId} username={author} />
+          <PostDialog postId={postId} username={author} openDialog={this.props.openDialog} />
         </CardContent>
       </Card>
     )
@@ -94,7 +94,8 @@ export class Post extends Component {
 Post.propTypes = {
   user: PropTypes.object.isRequired,
   post: PropTypes.object.isRequired,
-  classes: PropTypes.object.isRequired
+  classes: PropTypes.object.isRequired,
+  openDialog: PropTypes.bool
 }
 
 const mapStateToProps = (state) => ({
