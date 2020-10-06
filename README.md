@@ -26,6 +26,7 @@ Front:
 - Posting system
 - Like / Unlike
 - Comments
+- Notifications
 
-TO DO:
-- Notifications system
+TODO:
+- Deployment (front) on Firebase
