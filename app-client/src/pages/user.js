@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import Post from '../components/post/Post';
 import StaticProfile from '../components/profile/StaticProfile';
+import PostSkeleton from '../util/PostSkeleton';
 
 // MUI Stuff
 import Grid from '@material-ui/core/Grid';
@@ -16,12 +17,11 @@ class user extends Component {
     profile: null,
     postIdParam: null
   }
+
   componentDidMount() {
     const username = this.props.match.params.username;
     const postId = this.props.match.params.postId;
-
     if(postId) this.setState({ postIdParam: postId })
-
     this.props.getUserData(username)
     axios
       .get(`/user/${username}`)
@@ -32,11 +32,12 @@ class user extends Component {
       })
       .catch((err) => console.log(err))
   }
+
   render() {
     const { posts, loading } = this.props.data;
     const { postIdParam } = this.state; 
     const postsMarkup = loading ? (
-      <p>Loading data...</p>
+      <PostSkeleton />
     ) : posts === null ? (
       <p>No posts from this user</p>
     ) : !postIdParam ? (
@@ -48,6 +49,7 @@ class user extends Component {
         else return <Post key={post.postId} post={post} openDialog/>
       })
     )
+
     return (
       <div>
         <Grid container spacing={2}>
