@@ -37,28 +37,20 @@ const StaticProfile = (props) => {
         <div className="image-wrapper">
           <img src={imageUrl} alt="profile" className="profile-image" />
         </div>
-
         <hr />
-
         <div className="profile-details">
           <MuiLink component={Link} to={`/users/${username}`} color="primary" variant="h5">
             @{username}
           </MuiLink>
-
-
           <hr />
-
           {bio && <Typography variant="body2">{bio}</Typography>}
-
           <hr />
-
           {location && (
             <Fragment>
               <LocationOn color="primary" /> <span>{location}</span>
               <hr />
             </Fragment>
           )}
-
           {website && (
             <Fragment>
               <LinkIcon color="primary" />
@@ -68,10 +60,8 @@ const StaticProfile = (props) => {
               <hr />
             </Fragment>
           )}
-
           <CalendarToday color="primary" />{' '}
           <span>Joined {dayjs(createdAt).format('MMM YYYY')}</span>
-
         </div>
       </div>
     </Paper>
@@ -84,4 +74,3 @@ StaticProfile.propTypes = {
 }
 
 export default withStyles(styles)(StaticProfile);
-

@@ -1,6 +1,5 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import withStyles from '@material-ui/core/styles/withStyles';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import EditDetails from './EditDetails';
@@ -8,14 +7,11 @@ import MyButton from '../../util/MyButton';
 import ProfileSkeleton from '../../util/ProfileSkeleton';
 
 // MUI Stuff
+import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
 import MuiLink from '@material-ui/core/Link';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
-
-// Redux Stuff
-import { connect } from 'react-redux';
-import { logoutUser, uploadImage } from '../../redux/actions/userActions';
 
 // Icons
 import LocationOn from '@material-ui/icons/LocationOn';
@@ -24,6 +20,10 @@ import CalendarToday from '@material-ui/icons/CalendarToday';
 import EditIcon from '@material-ui/icons/Edit';
 import KeyboardReturn from '@material-ui/icons/KeyboardReturn';
 
+// Redux Stuff
+import { connect } from 'react-redux';
+import { logoutUser, uploadImage } from '../../redux/actions/userActions';
+
 const styles = (theme) => ({
   ...theme.spreadThis
 });
@@ -31,11 +31,9 @@ const styles = (theme) => ({
 export class Profile extends Component {
   userImageChange = (event) => {
     const image = event.target.files[0];
-    // send to server
     const formData = new FormData();
     formData.append('image', image, image.name);
     this.props.uploadImage(formData);
-
   }
 
   userEditPicture = () => {
@@ -67,28 +65,20 @@ export class Profile extends Component {
               <EditIcon color="primary" />
             </MyButton>
           </div>
-
           <hr />
-
           <div className="profile-details">
             <MuiLink component={Link} to={`/users/${username}`} color="primary" variant="h5">
               @{username}
             </MuiLink>
-
-
             <hr />
-
             {bio && <Typography variant="body2">{bio}</Typography>}
-
             <hr />
-
             {location && (
               <Fragment>
                 <LocationOn color="primary" /> <span>{location}</span>
                 <hr />
               </Fragment>
             )}
-
             {website && (
               <Fragment>
                 <LinkIcon color="primary" />
@@ -98,18 +88,13 @@ export class Profile extends Component {
                 <hr />
               </Fragment>
             )}
-
             <CalendarToday color="primary" />{' '}
             <span>Joined {dayjs(createdAt).format('MMM YYYY')}</span>
-
           </div>
-
           <MyButton tip="Logout" onClick={this.userLogout}>
             <KeyboardReturn color="primary" />
           </MyButton>
-
           <EditDetails />
-
         </div>
       </Paper>
     ) : (
@@ -129,7 +114,6 @@ export class Profile extends Component {
       )) : (
         <ProfileSkeleton />
       )
-
     return profileMarkup;
   }
 }

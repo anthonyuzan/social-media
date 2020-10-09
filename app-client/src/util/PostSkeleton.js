@@ -61,7 +61,6 @@ const PostSkeleton = (props) => {
         <div className={classes.fullLine}/>
         <div className={classes.halfLine}/>
       </CardContent>
-
     </Card>
   ))
 

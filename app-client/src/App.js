@@ -1,13 +1,15 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import './App.css';
-import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
-import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import themeObject from './util/theme';
 import jwtDecode from 'jwt-decode';
 import axios from 'axios';
 
-// Redux
+// MUI Stuff
+import { ThemeProvider as MuiThemeProvider } from '@material-ui/core/styles';
+import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
+
+// Redux Stuff
 import { Provider } from 'react-redux';
 import store from './redux/store';
 import { SET_AUTHENTICATED } from './redux/types';
@@ -22,7 +24,6 @@ import home from './pages/home';
 import login from './pages/login';
 import signup from './pages/signup';
 import user from './pages/user';
-
 
 const theme = createMuiTheme(themeObject);
 
@@ -63,4 +64,3 @@ export class App extends Component {
 }
 
 export default App;
-

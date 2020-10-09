@@ -19,9 +19,7 @@ import { connect } from 'react-redux';
 
 export class Navbar extends Component {
   render() {
-
     const { authenticated } = this.props
-
     return (
       <AppBar>
         <Toolbar className="nav-container">
@@ -47,9 +45,6 @@ export class Navbar extends Component {
     )
   }
 }
-
-
-
 
 Navbar.propTypes = {
   authenticated: PropTypes.bool.isRequired

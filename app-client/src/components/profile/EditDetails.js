@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import withStyles from '@material-ui/core/styles/withStyles';
 import MyButton from '../../util/MyButton';
 
 // MUI stuff
+import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -11,12 +11,12 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 
+// Icons
+import EditIcon from '@material-ui/icons/Edit';
+
 // Redux stuff
 import { connect } from 'react-redux';
 import { editUserDetails } from '../../redux/actions/userActions';
-
-// Icons
-import EditIcon from '@material-ui/icons/Edit';
 
 const styles = (theme) => ({
   ...theme.spreadThis,
@@ -26,7 +26,6 @@ const styles = (theme) => ({
 });
 
 export class EditDetails extends Component {
-
   state = {
     bio: '',
     website: '',
@@ -68,7 +67,6 @@ export class EditDetails extends Component {
       website: this.state.website,
       location: this.state.location,
     };
-
     this.props.editUserDetails(userDetails);
     this.userClose();
   }
@@ -100,7 +98,6 @@ export class EditDetails extends Component {
                   onChange={this.handleChange}
                   fullWidth
                 />
-
                 <TextField
                   name="website"
                   type="text"
@@ -111,7 +108,6 @@ export class EditDetails extends Component {
                   onChange={this.handleChange}
                   fullWidth
                 />
-
                 <TextField
                   name="location"
                   type="text"
@@ -122,16 +118,12 @@ export class EditDetails extends Component {
                   onChange={this.handleChange}
                   fullWidth
                 />
-
               </form>
             </DialogContent>
-
             <DialogActions>
               <Button onClick={this.userClose} color="primary">Cancel</Button>
               <Button onClick={this.userSubmit} color="primary">Save</Button>
             </DialogActions>
-
-
         </Dialog>
       </Fragment>
     )

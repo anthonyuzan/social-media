@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
-import withStyles from '@material-ui/core/styles/withStyles';
 import MyButton from '../../util/MyButton';
 
 // MUI stuff
+import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -11,13 +11,13 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-// Redux stuff
-import { connect } from 'react-redux';
-import { postPost, clearErrors } from '../../redux/actions/dataActions';
-
 // Icons
 import AddIcon from '@material-ui/icons/Add';
 import CloseIcon from '@material-ui/icons/Close';
+
+// Redux stuff
+import { connect } from 'react-redux';
+import { postPost, clearErrors } from '../../redux/actions/dataActions';
 
 const styles = (theme) => ({
   ...theme.spreadThis,
@@ -42,6 +42,7 @@ class PostPost extends Component {
     body: '',
     errors: {}
   };
+
   componentWillReceiveProps(nextProps) {
     if (nextProps.UI.errors) {
       this.setState({ errors: nextProps.UI.errors });
@@ -50,20 +51,25 @@ class PostPost extends Component {
       this.setState({ body: '', open: false, errors: {} });
     }
   }
+
   userOpen = () => {
     this.setState({ open: true })
   }
+
   userClose = () => {
     this.props.clearErrors()
     this.setState({ open: false, errors: {} })
   }
+
   userChange = (event) => {
     this.setState({ [event.target.name]: event.target.value })
   }
+
   userSubmit = (event) => {
     event.preventDefault();
     this.props.postPost({ body: this.state.body })
   }
+
   render() {
     const { errors } = this.state;
     const { classes, UI: { loading } } = this.props;

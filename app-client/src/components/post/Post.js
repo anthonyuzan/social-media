@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import withStyles from '@material-ui/core/styles/withStyles';
-import Typography from '@material-ui/core/Typography';
 import { Link } from 'react-router-dom';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
@@ -11,13 +9,14 @@ import PostDialog from './PostDialog';
 import LikeButton from './LikeButton';
 
 // MUI Stuff
+import withStyles from '@material-ui/core/styles/withStyles';
+import Typography from '@material-ui/core/Typography';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 
 // Icons
 import ChatIcon from '@material-ui/icons/Chat';
-
 
 // Redux Stuff
 import { connect } from 'react-redux';
@@ -40,7 +39,6 @@ const styles = {
 export class Post extends Component {
   render() {
     dayjs.extend(relativeTime);
-
     const {
       classes,
       post: {
@@ -58,8 +56,6 @@ export class Post extends Component {
       }
     } = this.props;
 
-
-
     const deleteButton = authenticated && author === username ? (
       <DeletePost postId={postId} />
     ) : null
@@ -71,9 +67,7 @@ export class Post extends Component {
           <Typography variant="h5" component={Link} to={`/users/${author}`} color="primary">
             @{author}
           </Typography>
-
           {deleteButton}
-
           <Typography variant="body2" color="textSecondary">
             {dayjs(date).fromNow()}
           </Typography>

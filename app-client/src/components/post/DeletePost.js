@@ -1,9 +1,9 @@
 import React, { Component, Fragment } from 'react';
-import withStyles from '@material-ui/core/styles/withStyles';
 import PropTypes from 'prop-types';
 import MyButton from '../../util/MyButton';
 
 // MUI Stuff
+import withStyles from '@material-ui/core/styles/withStyles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
@@ -32,13 +32,16 @@ export class DeletePost extends Component {
   userOpen = () => {
     this.setState({ open: true })
   }
+
   userClose = () => {
     this.setState({ open: false })
   }
+
   deletePost = () => {
     this.props.deletePost(this.props.postId)
     this.setState({ open: false })
   }
+
   render(){
     const { classes } = this.props;
     return (

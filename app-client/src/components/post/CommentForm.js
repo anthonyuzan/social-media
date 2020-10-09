@@ -42,7 +42,6 @@ export class CommentForm extends Component {
   render() {
     const { classes, authenticated } = this.props;
     const errors = this.state.errors;
-
     const commentFormMarkup = authenticated ? (
       <Grid item sm={12} style={{ textAlign: 'center' }}>
         <form onSubmit={this.userSubmit}>
@@ -69,7 +68,6 @@ export class CommentForm extends Component {
         <hr className={classes.visibleSeparator} />
       </Grid>
     ) : null
-
     return commentFormMarkup
   }
 }

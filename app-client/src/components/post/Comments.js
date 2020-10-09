@@ -8,10 +8,6 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 
-// Redux stuff
-
-// Icons 
-
 const styles = theme => ({
   ...theme.spreadThis,
   commentImage: {
@@ -62,7 +58,6 @@ class Comments extends Component {
               )}
             </Fragment>
           )
-
         })}
       </Grid>
     )
