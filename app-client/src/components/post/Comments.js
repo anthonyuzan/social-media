@@ -7,6 +7,7 @@ import dayjs from 'dayjs';
 import withStyles from '@material-ui/core/styles/withStyles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import MuiLink from '@material-ui/core/Link';
 
 const styles = theme => ({
   ...theme.spreadThis,
@@ -37,13 +38,13 @@ class Comments extends Component {
                   </Grid>
                   <Grid item sm={9}>
                     <div className={classes.commentData}>
-                      <Typography
+                      <MuiLink
                         variant="h5"
                         component={Link}
                         to={`/users/${username}`}
                         color="primary">
                         @{username}
-                      </Typography>
+                      </MuiLink>
                       <Typography variant="body2" color="textSecondary">
                         {dayjs(createdAt).format('h:mm a, MMM DD YYYY')}
                       </Typography>

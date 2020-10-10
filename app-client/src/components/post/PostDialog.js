@@ -14,6 +14,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
+import MuiLink from '@material-ui/core/Link';
 
 // Icons 
 import CloseIcon from '@material-ui/icons/Close';
@@ -106,9 +107,9 @@ class PostDialog extends Component {
             <img src={userImage} alt="Profile" className={classes.profileImage} />
           </Grid>
           <Grid item sm={7}>
-            <Typography component={Link} color="primary" variant="h5" to={`/users/${author}`}>
+            <MuiLink component={Link} color="primary" variant="h5" to={`/users/${author}`}>
               @{author}
-            </Typography>
+            </MuiLink>
             <hr className={classes.invisibleSeparator} />
             <Typography variant="body2" color="textSecondary">
               {dayjs(date).format('h:mm a, MMM DD YYYY')}
