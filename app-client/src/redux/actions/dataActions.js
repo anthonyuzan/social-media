@@ -119,7 +119,10 @@ export const submitComment = (postId, commentData) => (dispatch) => {
     .then((res) => {
       dispatch({
         type: SUBMIT_COMMENT,
-        payload: res.data
+        payload: {
+          postId: postId,
+          comment: res.data
+        }
       })
       dispatch(clearErrors())
     })
