@@ -1,13 +1,12 @@
 # SOCIAL-MEDIA
 
-![im_1](./app-client/src/images/icon.png)
-
 Full stack project inspired by a tutorial made by classsed (youtube channel).
+
 Source: https://www.youtube.com/watch?v=RkBfu-W7tt0&list=PLMhAeHCz8S38ryyeMiBPPUnFAiWnoPvWP
 
 :date: Creation date: October 2020
 
-## How to access?
+## :rocket: How to access?
 
 Link: https://social-media-5cf15.web.app/
 
@@ -23,15 +22,15 @@ Link: https://social-media-5cf15.web.app/
 
 Home page:
 
-![im_2](./screenshots/home-page.png)
+![im_1](./screenshots/home-page.png)
 
 Signup page:
 
-![im_3](./screenshots/signup-page.png)
+![im_2](./screenshots/signup-page.png)
 
 Login page:
 
-![im_4](./screenshots/login-page.png)
+![im_3](./screenshots/login-page.png)
 
 
 
