@@ -1,32 +1,37 @@
-# social-media
+# SOCIAL-MEDIA
 
-Stack: React, Firebase, Redux, Express and Material-UI.
+![im_1](./app-client/src/images/icon.png)
 
-## What's done?:
+Full stack project inspired by a tutorial made by classsed (youtube channel).
+Source: https://www.youtube.com/watch?v=RkBfu-W7tt0&list=PLMhAeHCz8S38ryyeMiBPPUnFAiWnoPvWP
 
-Back: 
-- Read posts
-- Create new posts
-- Add comments to a post
-- Like and unlike posts
-- Notifications system 
-- Delete posts
-- Authentification security
-- Signup 
-- Login
-- Change profile image
+:date: Creation date: October 2020
 
-Front:
-- Main pages
-- Routes
-- Form to login
-- Form to sign up
-- Profile section
-- Profile page
-- Posting system
-- Like / Unlike
-- Comments
-- Notifications
+## How to access?
 
-TODO:
-- Deployment (front) on Firebase
+Link: https://social-media-5cf15.web.app/
+
+## :wrench: Stack
+
+- React
+- Node.js (8)
+- Firebase
+- Redux
+- Express
+
+## :eyes: Overview
+
+Home page:
+
+![im_2](./screenshots/home-page.png)
+
+Signup page:
+
+![im_3](./screenshots/signup-page.png)
+
+Login page:
+
+![im_4](./screenshots/login-page.png)
+
+
+
