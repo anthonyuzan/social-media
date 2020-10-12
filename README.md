@@ -22,15 +22,15 @@ Link: https://social-media-5cf15.web.app/
 
 Home page:
 
-![im_1](./screenshots/home-page.png)
+![im_1](./screenshots/home.png)
 
 Signup page:
 
-![im_2](./screenshots/signup-page.png)
+![im_2](./screenshots/signup.png)
 
 Login page:
 
-![im_3](./screenshots/login-page.png)
+![im_3](./screenshots/login.png)
 
 
 
